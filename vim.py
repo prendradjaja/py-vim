@@ -26,6 +26,12 @@ class Buffer: # {{{
         s = s[:col-1] + char + s[col-1:]
         self._contents[row-1] = s
 
+    def deletechar(self, row, col):
+        """Delete a character at the specified position"""
+        s = self._contents[row-1]
+        s = s[:col-1] + s[col:]
+        self._contents[row-1] = s
+
     def dump(self):
         """Return string: the whole buffer contents"""
         return '\n'.join(self._contents)
@@ -112,6 +118,7 @@ class Editor: # {{{
         return {
                 NORMAL: {
                     'i': self.insert,
+                    'x': self.delete_char,
                     '\\': self.show_debugging_buffer,
                     },
                 MOTION: {
