@@ -16,6 +16,10 @@ class Buffer: # {{{
         """Return tuple of strings: the specified lines (inclusive)"""
         return tuple(self._contents[start-1:end])
 
+    def all_lines(self):
+        """Return tuple of strings: all lines"""
+        return tuple(self._contents)
+
     def numlines(self):
         """Return the number of lines."""
         return len(self._contents)
@@ -81,7 +85,7 @@ class Editor: # {{{
 
     def showbuffer(self):
         self.win.clear()
-        for y, line in enumerate(self.buffer.lines(self.row, self.buffer.numlines())):
+        for y, line in enumerate(self.buffer.all_lines()):
             self.win.addstr(y, 0, line)
         self.win.refresh()
 
