@@ -4,6 +4,7 @@ Handle wrapped lines
 Handle signals (SIGINT, etc)
 Split Editor class into Editor and Display
 Use dependency injection
+Choose a_sanevariablenamingConvention
 
 Some important features:
 
