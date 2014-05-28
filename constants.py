@@ -23,3 +23,5 @@ SELF_INSERTABLE_CHARS = \
 + '~`"<>,.;:/=?+-|[]{}'
 + "'"
 )
+
+NOT_IMPLEMENTED = 'not implemented'

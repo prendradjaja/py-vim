@@ -15,7 +15,7 @@ from constants import *
 class Motion:
     type = UNSPECIFIED   # override me
     def execute(editor): # override me
-        raise Exception('not implemented')
+        raise Exception(NOT_IMPLEMENTED)
 
 class cursor_left(Motion):
     type = EXCLUSIVE
