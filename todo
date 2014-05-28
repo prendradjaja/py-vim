@@ -1,4 +1,4 @@
-Add proper edge handling for cursor_right and cursor_down
+Fix "jumping off the cliff" behavior of cursor_down and cursor_up
 Handle wrapped lines
 Figure out what features to include
 Handle signals (SIGINT, etc)
