@@ -1,7 +1,9 @@
-"""A motion takes an editor and returns an endpoint. (row, col)
+"""A motion is represented as a function as follows:
 
-A motion should also have an 'type' attribute with value INCLUSIVE, EXCLUSIVE,
-or LINEWISE.
+It should take an editor and return an endpoint. (row, col)
+
+It should also have an 'type' attribute with value INCLUSIVE, EXCLUSIVE, or
+LINEWISE.
 """
 
 from constants import *
