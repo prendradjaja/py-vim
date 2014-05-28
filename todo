@@ -1,6 +1,37 @@
 Fix "jumping off the cliff" behavior of cursor_down and cursor_up
 Handle wrapped lines
-Figure out what features to include
 Handle signals (SIGINT, etc)
 Split Editor class into Editor and Display
 Use dependency injection
+
+Some important features:
+
+  Operators:
+    d
+    c
+    y
+    gu, gU
+    >, <
+    surround
+
+  Motions:
+    0, ^, $
+    gg, G
+    f, t, F, T, ;, <comma>
+    w, W, b, B, e, E, ge, gE
+    _, -, +, <CR>
+
+  Text objects:
+    word, WORD
+    sentence
+    quote
+    paragraph
+    ([{<>}])
+
+  Other:
+    file handling
+    multiple buffers
+    multiple windows
+    marks
+    visual
+    :substitute
