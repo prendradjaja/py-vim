@@ -10,16 +10,17 @@
    c. It can modify the state of the editor as well, if necessary. This is
       used by operators like 'yank' and 'fold'.
 
-2) It has a mandatory 'optype' attribute and an optional 'cursorpos'
-attribute.
-
- - optype can be: LINEWISE or CHARACTERWISE.
+2) It has two optional attributes:
+ - optype is by default set to CHARACTERWISE. It can be set to LINEWISE
+   instead.
       Note that operators are not mentioned as having types like this in the
       Vim documentation; only motions are.
 
-      Linewise operators affect whole lines. Characterwise operators can
-      affect partial lines. Accordingly, there are the following two
-      distinctions in the API for operators based on operator type:
+      Most operators are characterwise, like "d" and "c". Linewise operators
+      like ">" are special in that they affect whole lines. For example, using
+      ">w" doesn't just indent a word. Indentation affects an entire line.
+      There are the following two distinctions in the API for operators based
+      on operator type:
 
          a. After the operation, the cursor is placed in different places
             relative to the text operated on:
@@ -51,14 +52,14 @@ attribute.
             is not included. If it were inclusive, this tuple would be given
             instead: ('ipsum', 'dolor s')
 
- - cursorpos is by default set to START. If it's set to end, the cursor is
-   placed at the end of the text operated on.
+ - cursorpos is by default set to START. It can be set to END instead, which
+   affects cursor placement after the operation. See details above.
 """
 
 from constants import *
 
 class Operator:
-    optype = UNSPECIFIED # override me
+    optype = CHARACTERWISE # default value
     cursorpos = START # default value
     def execute(editor, text, motion_type): # override me
         raise Exception(NOT_IMPLEMENTED)
