@@ -56,3 +56,9 @@ attribute.
 """
 
 from constants import *
+
+class Operator:
+    optype = UNSPECIFIED # override me
+    cursorpos = START # default value
+    def execute(editor, text, motion_type):
+        raise Exception(NOT_IMPLEMENTED)
