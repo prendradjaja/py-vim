@@ -154,5 +154,6 @@ def main(win):
     editor = Editor(win)
     editor.mainloop()
 
-# This runs main, supplying it with a window
-curses.wrapper(main)
+if __name__ == '__main__':
+    # This runs main, supplying it with a window
+    curses.wrapper(main)
