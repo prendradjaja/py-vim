@@ -1,39 +1,47 @@
-"""A motion is represented as a function as follows:
+"""A motion is represented as a subclass of Motion as follows:
 
-1) It takes a single Editor argument.
+1) It has an 'execute' method that implements the motion:
+   a. It takes a single Editor argument.
+   b. It returns a tuple of end coordinates. (row, col)
+   c. It does not affect the Editor's Buffer.
 
-2) It returns a tuple of end coordinates. (row, col)
-
-3) It does not affect the Editor's Buffer.
-
-4) It has a 'type' attribute with value INCLUSIVE, EXCLUSIVE, or LINEWISE.
+2) It has a 'type' attribute with value INCLUSIVE, EXCLUSIVE, or LINEWISE.
 (Note that, as noted in the Vim documentation, inclusive and exclusive motions
 are types of characterwise motions.)
 """
 
 from constants import *
 
-def cursor_left(editor):
-    row, col = editor.row, editor.col
-    col = max(col - 1, 1)
-    return row, col
-cursor_left.type = EXCLUSIVE
+class Motion:
+    type = UNSPECIFIED   # override me
+    def execute(editor): # override me
+        raise Exception('not implemented')
 
-def cursor_right(editor):
-    row, col = editor.row, editor.col
-    col = min(col + 1, len(editor.buffer.line(row)))
-    return row, col
-cursor_right.type = EXCLUSIVE
+class cursor_left(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row, col = editor.row, editor.col
+        col = max(col - 1, 1)
+        return row, col
 
-def cursor_up(editor):
-    row, col = editor.row, editor.col
-    row = max(row - 1, 1)
-    return row, col
-cursor_right.type = LINEWISE
+class cursor_right(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row, col = editor.row, editor.col
+        col = min(col + 1, len(editor.buffer.line(row)))
+        return row, col
 
-def cursor_down(editor):
-    row, col = editor.row, editor.col
-    row = min(row + 1, editor.buffer.numlines())
-    return row, col
-cursor_right.type = LINEWISE
+class cursor_up(Motion):
+    type = LINEWISE
+    def execute(editor):
+        row, col = editor.row, editor.col
+        row = max(row - 1, 1)
+        return row, col
+
+class cursor_down(Motion):
+    type = LINEWISE
+    def execute(editor):
+        row, col = editor.row, editor.col
+        row = min(row + 1, editor.buffer.numlines())
+        return row, col
 

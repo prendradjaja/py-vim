@@ -66,7 +66,7 @@ class Editor: # {{{
     def processkey(self, key):
         if self.mode is NORMAL:
             if key in self.bindings[MOTION]:
-                self.row, self.col = self.bindings[MOTION][key](self)
+                self.row, self.col = self.bindings[MOTION][key].execute(self)
                 self.positioncursor()
             elif key in self.bindings[NORMAL]:
                 self.bindings[NORMAL][key]()
