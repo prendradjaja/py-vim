@@ -1,6 +1,10 @@
 """A motion is represented as a function as follows:
 
-It should take an Editor and return a tuple of end coordinates. (row, col)
+1) It should take a single Editor argument.
+
+2) It should return a tuple of end coordinates. (row, col)
+
+3) It should not affect the Editor's Buffer.
 
 It should also have an 'type' attribute with value INCLUSIVE, EXCLUSIVE, or
 LINEWISE.
