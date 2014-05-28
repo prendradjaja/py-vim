@@ -108,7 +108,7 @@ class Editor: # {{{
         self.col += 1
         self.positioncursor()
         # Show buffer (debug)
-        self.print(self.buffer.dump())
+        self.show_debugging_buffer()
 
     # }}}
 
@@ -126,6 +126,9 @@ class Editor: # {{{
                     '\\': self.normal,
                     },
                 }
+
+    def show_debugging_buffer(self):
+        self.print(self.buffer.dump())
 
     def print(self, s, y=20):
         """Print some text (for debugging)"""
