@@ -1,3 +1,5 @@
+from string import ascii_letters as LETTERS, digits as DIGITS
+
 ( NORMAL
 , INSERT
 , OPERATOR_PENDING
@@ -10,9 +12,8 @@
 ) = range(9)
 
 SELF_INSERTABLE_CHARS = \
-( 'abcdefghijklmnopqrstuvwxyz'
-+ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-+ '0123456789'
+( LETTERS
++ DIGITS
 + '!@#$%^&*()'
 + '~`"<>,.;:/=?+-|[]{}'
 + "'"
