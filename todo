@@ -30,6 +30,7 @@ Some important features:
 
   Other:
     p
+    counts
     file handling
     multiple buffers
     multiple windows
