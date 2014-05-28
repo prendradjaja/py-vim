@@ -28,6 +28,5 @@ def cursor_down(editor):
     row, col = editor.row, editor.col
     row = min(row + 1, editor.buffer.numlines())
     return row, col
-
 cursor_right.type = LINEWISE
 
