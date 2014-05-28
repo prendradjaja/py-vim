@@ -60,5 +60,5 @@ from constants import *
 class Operator:
     optype = UNSPECIFIED # override me
     cursorpos = START # default value
-    def execute(editor, text, motion_type):
+    def execute(editor, text, motion_type): # override me
         raise Exception(NOT_IMPLEMENTED)
