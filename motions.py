@@ -1,6 +1,6 @@
 """A motion is represented as a function as follows:
 
-It should take an editor and return an endpoint. (row, col)
+It should take an Editor and return a tuple of end coordinates. (row, col)
 
 It should also have an 'type' attribute with value INCLUSIVE, EXCLUSIVE, or
 LINEWISE.
