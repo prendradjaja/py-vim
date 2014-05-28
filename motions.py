@@ -1,13 +1,14 @@
 """A motion is represented as a function as follows:
 
-1) It should take a single Editor argument.
+1) It takes a single Editor argument.
 
-2) It should return a tuple of end coordinates. (row, col)
+2) It returns a tuple of end coordinates. (row, col)
 
-3) It should not affect the Editor's Buffer.
+3) It does not affect the Editor's Buffer.
 
-It should also have an 'type' attribute with value INCLUSIVE, EXCLUSIVE, or
-LINEWISE.
+4) It has a 'type' attribute with value INCLUSIVE, EXCLUSIVE, or LINEWISE.
+(Note that, as noted in the Vim documentation, inclusive and exclusive motions
+are types of characterwise motions.)
 """
 
 from constants import *
