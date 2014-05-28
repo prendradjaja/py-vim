@@ -11,7 +11,10 @@ from string import ascii_letters as LETTERS, digits as DIGITS
 , SELF_INSERT
 , CHARACTERWISE
 , BLOCKWISE
-) = range(11)
+, UNSPECIFIED
+, START
+, END
+) = range(14)
 
 SELF_INSERTABLE_CHARS = \
 ( LETTERS
