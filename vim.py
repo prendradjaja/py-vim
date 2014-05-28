@@ -1,6 +1,7 @@
 import curses
 
-NORMAL, INSERT, OPERATOR = range(3)
+import motions
+from constants import *
 
 class Buffer: # {{{
     """A one-indexed buffer of text (top left corner is row 1, column 1)"""
@@ -53,10 +54,17 @@ class Editor: # {{{
             return
 
     def processkey(self, key):
-        if key in self.bindings[self.mode]:
-            self.bindings[self.mode][key]()
+        if self.mode is NORMAL:
+            if key in self.bindings[MOTION]:
+                self.row, self.col = self.bindings[MOTION][key](self)
+                self.positioncursor()
+            elif key in self.bindings[NORMAL]:
+                self.bindings[NORMAL][key]()
         elif self.mode is INSERT:
-            self.insertchar(key)
+            if key in self.bindings[INSERT]:
+                self.bindings[INSERT][key]()
+            elif key in SELF_INSERTABLE_CHARS:
+                self.insertchar(key)
 
     # Display {{{
     def positioncursor(self):
@@ -83,23 +91,6 @@ class Editor: # {{{
     # }}}
 
     # Editor commands {{{
-    def cursor_left(self):
-        if self.col > 1:
-            self.col -= 1
-            self.positioncursor()
-    def cursor_right(self):
-        if True:
-            self.col += 1
-            self.positioncursor()
-    def cursor_down(self):
-        if True:
-            self.row += 1
-            self.positioncursor()
-    def cursor_up(self):
-        if self.row > 1:
-            self.row -= 1
-            self.positioncursor()
-
     def insertchar(self, char):
         # Add to buffer and display
         self.buffer.insertchar(self.row, self.col, char)
@@ -110,17 +101,24 @@ class Editor: # {{{
         # Show buffer (debug)
         self.show_debugging_buffer()
 
+    def delete_char(self):
+        self.buffer.deletechar(self.row, self.col)
+        self.win.delch(self.row-1, self.col-1)
+
     # }}}
 
     # Other {{{
     def defaultbindings(self):
         return {
                 NORMAL: {
-                    'h': self.cursor_left,
-                    'l': self.cursor_right,
-                    'j': self.cursor_down,
-                    'k': self.cursor_up,
                     'i': self.insert,
+                    '\\': self.show_debugging_buffer,
+                    },
+                MOTION: {
+                    'h': motions.cursor_left,
+                    'l': motions.cursor_right,
+                    'k': motions.cursor_up,
+                    'j': motions.cursor_down,
                     },
                 INSERT: {
                     '\\': self.normal,
