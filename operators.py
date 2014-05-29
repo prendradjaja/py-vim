@@ -52,6 +52,11 @@
             is not included. If it were inclusive, this tuple would be given
             instead: ('ipsum', 'dolor s')
 
+            However, a characterwise operator acts as a linewise operator when
+            used with a linewise motion, so using the "j" motion gives both
+            linewise and characterwise operators the tuple ('Lorem ipsum',
+            'dolor sit') as the second argument.
+
  - cursorpos is by default set to START. It can be set to END instead, which
    affects cursor placement after the operation. See details above.
 """
