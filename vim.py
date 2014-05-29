@@ -198,6 +198,7 @@ class Editor: # {{{
                     '\\': self.show_debugging_buffer,
                     },
                 OPERATOR: {
+                    'd': operators.delete,
                     },
                 MOTION: {
                     'h': motions.left,

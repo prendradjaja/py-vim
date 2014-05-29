@@ -69,3 +69,14 @@ class Operator:
     def execute(editor, text, motion_type):
         """Override me: return result text"""
         raise Exception(ABSTRACT_METHOD)
+
+class delete(Operator):
+    def execute(editor, text, motion_type):
+        if motion_type is LINEWISE:
+            return ()
+        elif motion_type is CHARACTERWISE:
+            return ('',)
+        elif motion_type is BLOCKWISE:
+            raise Exception(NOT_YET_IMPLEMENTED)
+        else:
+            raise ValueError(INVALID_MOTION_TYPE)
