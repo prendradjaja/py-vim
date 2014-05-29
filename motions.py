@@ -17,7 +17,7 @@ class Motion:
     type = UNSPECIFIED # override me with: EXCLUSIVE | INCLUSIVE | LINEWISE
     def execute(editor):
         """Override me: return end coordinates"""
-        raise Exception(NOT_IMPLEMENTED)
+        raise Exception(ABSTRACT_METHOD)
 
 class left(Motion):
     type = EXCLUSIVE

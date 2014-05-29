@@ -24,4 +24,4 @@ SELF_INSERTABLE_CHARS = \
 + "'"
 )
 
-NOT_IMPLEMENTED = 'not implemented'
+ABSTRACT_METHOD = 'abstract method should be overridden in subclass'
