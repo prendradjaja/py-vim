@@ -38,7 +38,7 @@ class Buffer: # {{{
 
     def dump(self):
         """Return string: the whole buffer contents"""
-        return '\n'.join(self._contents)
+        return '\n'.join(self._contents) + '\n'
 
 # }}}
 
