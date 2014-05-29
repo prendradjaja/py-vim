@@ -16,6 +16,11 @@ class Buffer: # {{{
         """Return tuple of strings: the specified lines (inclusive)"""
         return tuple(self._contents[start-1:end])
 
+    def replace_lines(self, start, end, new_text):
+        """Replace the specified lines (inclusive) with new text (a tuple or
+        list of strings)"""
+        self._contents[start-1:end] = new_text
+
     def all_lines(self):
         """Return tuple of strings: all lines"""
         return tuple(self._contents)
