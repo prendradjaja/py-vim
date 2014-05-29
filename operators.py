@@ -64,7 +64,8 @@
 from constants import *
 
 class Operator:
-    optype = CHARACTERWISE # default value
-    cursorpos = START # default value
-    def execute(editor, text, motion_type): # override me
+    optype = CHARACTERWISE # default. can also be LINEWISE
+    cursorpos = START # default. can also be END
+    def execute(editor, text, motion_type):
+        """Override me: return result text"""
         raise Exception(NOT_IMPLEMENTED)

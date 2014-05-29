@@ -14,8 +14,9 @@ are types of characterwise motions.)
 from constants import *
 
 class Motion:
-    type = UNSPECIFIED   # override me
-    def execute(editor): # override me
+    type = UNSPECIFIED # override me with: EXCLUSIVE | INCLUSIVE | LINEWISE
+    def execute(editor):
+        """Override me: return end coordinates"""
         raise Exception(NOT_IMPLEMENTED)
 
 class cursor_left(Motion):
