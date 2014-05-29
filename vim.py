@@ -144,10 +144,13 @@ class Editor: # {{{
     def show_debugging_buffer(self):
         self.print(self.buffer.dump())
 
-    def print(self, s, y=20):
+    def print(self, *s, y=20):
         """Print some text (for debugging)"""
         pos = self.win.getyx()
-        self.win.addstr(y, 0, s)
+        WIDTH = 40
+        HEIGHT = 8
+        self.win.addstr(y-1, 0, ('`'*WIDTH+'\n')*HEIGHT)
+        self.win.addstr(y, 0, ' '.join(str(each) for each in s))
         self.win.move(*pos)
         self.win.refresh()
 
