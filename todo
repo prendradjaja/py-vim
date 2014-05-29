@@ -5,6 +5,7 @@ Handle signals (SIGINT, etc)
 Split Editor class into Editor and Display
 Use dependency injection
 Choose a_sanevariablenamingConvention
+Settings
 
 Some important features:
 
