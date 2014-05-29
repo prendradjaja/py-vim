@@ -3,7 +3,8 @@
 1) It has an 'execute' method that implements the motion:
    a. It takes a single Editor argument.
    b. It returns a tuple of end coordinates. (row, col)
-   c. It does not affect the Editor's Buffer.
+   c. It does not affect the Editor's state, (e.g. cursor position, Buffer
+      contents) except possibly to save information. (e.g. for marks)
 
 2) It has a 'type' attribute with value INCLUSIVE, EXCLUSIVE, or LINEWISE.
 (Note that, as noted in the Vim documentation, inclusive and exclusive motions
