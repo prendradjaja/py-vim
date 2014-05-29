@@ -68,4 +68,4 @@ class Operator:
     cursorpos = START # default. can also be END
     def execute(editor, text, motion_type):
         """Override me: return result text"""
-        raise Exception(NOT_IMPLEMENTED)
+        raise Exception(ABSTRACT_METHOD)
