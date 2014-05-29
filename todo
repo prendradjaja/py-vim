@@ -6,6 +6,7 @@ Split Editor class into Editor and Display
 Use dependency injection
 Choose a_sanevariablenamingConvention
 Settings
+Figure out better terminology than "execute" for all of motions, operators, AND commands
 
 Some important features:
 
