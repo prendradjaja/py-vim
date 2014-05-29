@@ -131,10 +131,10 @@ class Editor: # {{{
                     '\\': self.show_debugging_buffer,
                     },
                 MOTION: {
-                    'h': motions.cursor_left,
-                    'l': motions.cursor_right,
-                    'k': motions.cursor_up,
-                    'j': motions.cursor_down,
+                    'h': motions.left,
+                    'l': motions.right,
+                    'k': motions.up,
+                    'j': motions.down,
                     },
                 INSERT: {
                     '\\': self.normal,

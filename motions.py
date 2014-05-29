@@ -19,28 +19,28 @@ class Motion:
         """Override me: return end coordinates"""
         raise Exception(NOT_IMPLEMENTED)
 
-class cursor_left(Motion):
+class left(Motion):
     type = EXCLUSIVE
     def execute(editor):
         row, col = editor.row, editor.col
         col = max(col - 1, 1)
         return row, col
 
-class cursor_right(Motion):
+class right(Motion):
     type = EXCLUSIVE
     def execute(editor):
         row, col = editor.row, editor.col
         col = min(col + 1, len(editor.buffer.line(row)))
         return row, col
 
-class cursor_up(Motion):
+class up(Motion):
     type = LINEWISE
     def execute(editor):
         row, col = editor.row, editor.col
         row = max(row - 1, 1)
         return row, col
 
-class cursor_down(Motion):
+class down(Motion):
     type = LINEWISE
     def execute(editor):
         row, col = editor.row, editor.col
