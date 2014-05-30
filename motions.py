@@ -50,7 +50,7 @@ class down(Motion):
 class first_column(Motion):
     type = EXCLUSIVE
     def execute(editor):
-        row, col = editor.row, 1 # TODO edge case: empty lines
+        row, col = editor.row, 1
         return row, col
 
 # foo motions
