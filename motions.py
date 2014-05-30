@@ -52,3 +52,22 @@ class first_column(Motion):
     def execute(editor):
         row, col = editor.row, 1 # TODO edge case: empty lines
         return row, col
+
+# foo motions
+
+class right_three_times(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row, col = editor.row, editor.col
+        col = min(col + 1, len(editor.buffer.line(row)))
+        col = min(col + 1, len(editor.buffer.line(row)))
+        col = min(col + 1, len(editor.buffer.line(row)))
+        return row, col
+
+class down_charwise(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row, col = editor.row, editor.col
+        row = min(row + 1, editor.buffer.numlines())
+        return row, col
+

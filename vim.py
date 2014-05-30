@@ -210,6 +210,8 @@ class Editor: # {{{
                     'l': motions.right,
                     'k': motions.up,
                     'j': motions.down,
+                    's': motions.right_three_times,
+                    'J': motions.down_charwise,
                     '0': motions.first_column,
                     },
                 INSERT: {
