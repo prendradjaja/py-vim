@@ -80,3 +80,12 @@ class delete(Operator):
             raise Exception(NOT_YET_IMPLEMENTED)
         else:
             raise ValueError(INVALID_MOTION_TYPE)
+
+class uppercase(Operator):
+    def execute(editor, text, motion_type):
+        return tuple(line.upper() for line in text)
+
+class increase_indent(Operator):
+    optype = LINEWISE
+    def execute(editor, text, motion_type):
+        return tuple(' '*INDENT_AMOUNT + line for line in text)

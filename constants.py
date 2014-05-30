@@ -27,3 +27,5 @@ SELF_INSERTABLE_CHARS = \
 ABSTRACT_METHOD = 'abstract method should be overridden in subclass'
 NOT_YET_IMPLEMENTED = 'not yet implemented'
 INVALID_MOTION_TYPE = 'invalid motion type'
+
+INDENT_AMOUNT = 4 # TODO -- when settings are implemented, this should go there

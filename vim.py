@@ -199,6 +199,8 @@ class Editor: # {{{
                     },
                 OPERATOR: {
                     'd': operators.delete,
+                    'g': operators.uppercase,
+                    '>': operators.increase_indent,
                     },
                 MOTION: {
                     'h': motions.left,
