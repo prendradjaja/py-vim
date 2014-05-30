@@ -7,6 +7,7 @@ Use dependency injection
 Choose a_sanevariablenamingConvention
 Settings
 Figure out better terminology than "execute" for all of motions, operators, AND commands
+How should failed motions (e.g. "f_" when there's no _) work?
 
 Some important features:
 
