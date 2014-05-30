@@ -46,6 +46,21 @@ class Buffer: # {{{
         s = s[:col-1] + s[col:]
         self._contents[row-1] = s
 
+    # should this yield linebreaks?
+    def coords_iterator(self, row, col, direction, include_start=False):
+        if include_start:
+            yield row, col
+        while row <= self.numlines():
+            while col < len(self._contents[row-1]):
+                col += 1
+                yield row, col
+            col = 0
+            row += 1
+
+    def iterator(self, row, col, direction, include_start=False):
+        for each in self.coords_iterator(row, col, direction, include_start):
+            yield each, self.char(*each)
+
     def dump(self):
         """Return string: the whole buffer contents"""
         return '\n'.join(self._contents) + '\n'
