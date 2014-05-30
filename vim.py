@@ -23,6 +23,9 @@ class Buffer: # {{{
         list of strings)"""
         self._contents[start-1:end] = new_text
 
+    def char(self, row, col):
+        return self._contents[row-1][col-1]
+
     def all_lines(self):
         """Return tuple of strings: all lines"""
         return tuple(self._contents)
