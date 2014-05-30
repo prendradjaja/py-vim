@@ -47,3 +47,8 @@ class down(Motion):
         row = min(row + 1, editor.buffer.numlines())
         return row, col
 
+class first_column(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row, col = editor.row, 1 # TODO edge case: empty lines
+        return row, col
