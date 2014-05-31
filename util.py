@@ -7,4 +7,7 @@ def split_at(index, seq):
 def unlines(lines):
     """Turn a sequence of strings into a single string, with newlines after
     each."""
-    return '\n'.join(lines) + '\n'
+    if lines:
+        return '\n'.join(lines) + '\n'
+    else:
+        return ''
