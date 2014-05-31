@@ -1,3 +1,4 @@
+Motions should be more functional
 Fix "jumping off the cliff" behavior of cursor_down and cursor_up
 Multichar commands
 Handle wrapped lines
