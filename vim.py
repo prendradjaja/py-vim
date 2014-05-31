@@ -24,6 +24,9 @@ class Buffer: # {{{
         self._contents[start-1:end] = new_text
 
     def char(self, row, col):
+        # TODO figure out behavior for invalid row or invalid col
+        if col == len(self._contents[row-1]) + 1:
+            return '\n'
         return self._contents[row-1][col-1]
 
     def all_lines(self):
@@ -51,7 +54,7 @@ class Buffer: # {{{
         if include_start:
             yield row, col
         while row <= self.numlines():
-            while col < len(self._contents[row-1]):
+            while col <= len(self._contents[row-1]):
                 col += 1
                 yield row, col
             col = 0
