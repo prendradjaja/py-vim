@@ -70,27 +70,76 @@ class Buffer: # {{{
 
 # }}}
 
-class Editor: # {{{
-    def __init__(self, win):
-        self.mode = NORMAL
-        self.buffer = Buffer(["Lorem ipsum dolor sit amet,",
-                              "consectetur adipisicing elit",
-                              "ed do eiusmod"])
+class InputSource:
+    """Gives input to an editor"""
+    pass
+
+class UserInputHandler(InputSource):
+    """Gives input from a user (through a curses window) to an editor"""
+    def __init__(self, win, editor):
         self.win = win
-        self.bindings = self.defaultbindings()
-        self.winpos = 1
-        self.col = 1
-        self.row = 1
-        self.showbuffer()
-        self.positioncursor()
-        self.pending_operator = None
+        self.editor = editor
 
     def mainloop(self):
         try:
             while True:
-                self.processkey(self.win.getkey())
+                self.editor.processkey(self.win.getkey())
         except KeyboardInterrupt:
             return
+
+class NoDisplay:
+    def position_cursor(self, *args):
+        pass
+
+    def show(self, *args):
+        pass
+
+    def print(self, *args):
+        pass
+
+class Display:
+    def __init__(self, win):
+        self.win = win
+
+    def position_cursor(self, editor):
+        """Move the terminal cursor to match the editor cursor"""
+        x = editor.col - 1
+        y = editor.row - editor.winpos
+        self.win.move(y, x)
+
+    def show(self, editor):
+        self.win.clear()
+        for y, line in enumerate(editor.buffer.all_lines()):
+            self.win.addstr(y, 0, line)
+        self.position_cursor(editor)
+        self.win.refresh()
+
+    def print(self, *s, y=20):
+        """Print some text (for debugging)"""
+        pos = self.win.getyx()
+        WIDTH = 40
+        HEIGHT = 8
+        self.win.addstr(y-1, 0, ('`'*WIDTH+'\n')*HEIGHT)
+        self.win.addstr(y, 0, ' '.join(str(each) for each in s))
+        self.win.move(*pos)
+        self.win.refresh()
+
+class Editor: # {{{
+    def __init__(self, display=None):
+        if display is None:
+            self.display = NoDisplay()
+        else:
+            self.display = display
+        self.mode = NORMAL
+        self.buffer = Buffer(["Lorem ipsum dolor sit amet,",
+                              "consectetur adipisicing elit",
+                              "ed do eiusmod"])
+        self.bindings = self.defaultbindings()
+        self.winpos = 1
+        self.col = 1
+        self.row = 1
+        self.pending_operator = None
+        self.display.show(self)
 
     def processkey(self, key):
         if self.mode is NORMAL:
@@ -99,7 +148,7 @@ class Editor: # {{{
                 self.pending_operator = self.bindings[OPERATOR][key]
             elif key in self.bindings[MOTION]:
                 self.row, self.col = self.bindings[MOTION][key].execute(self)
-                self.positioncursor()
+                self.display.position_cursor(self)
             elif key in self.bindings[NORMAL]:
                 self.bindings[NORMAL][key]()
         elif self.mode is INSERT:
@@ -113,14 +162,13 @@ class Editor: # {{{
                 self.mode = NORMAL
                 self.execute_command(operator, self.bindings[MOTION][key])
 
-
     def execute_command(self, operator, motion):
         # my responsibilities:
         #   1. extract the text by executing the motion
         #   2. execute the operator
         #   3. replace the text
         #   4. place the cursor
-        #   5. redraw
+        #   5. tell the display to redraw
         command_is_linewise = (motion.type is LINEWISE or
                               operator.optype is LINEWISE)
 
@@ -163,26 +211,10 @@ class Editor: # {{{
         #  - backwards motions
         #  - linewise operators
 
-        # 6. redraw
+        # 5. tell display to redraw
         # TODO? this redraws everything
-        self.showbuffer()
-        self.positioncursor()
-        self.print(self.buffer.numlines())
-
-    # Display {{{
-    def positioncursor(self):
-        """Move the terminal cursor to match the editor cursor"""
-        x = self.col - 1
-        y = self.row - self.winpos
-        self.win.move(y, x)
-
-    def showbuffer(self):
-        self.win.clear()
-        for y, line in enumerate(self.buffer.all_lines()):
-            self.win.addstr(y, 0, line)
-        self.win.refresh()
-
-    # }}}
+        self.display.show(self)
+        self.display.print(self.buffer.numlines())
 
     # For changing modes {{{
     def insert(self):
@@ -197,16 +229,16 @@ class Editor: # {{{
     def insertchar(self, char):
         # Add to buffer and display
         self.buffer.insertchar(self.row, self.col, char)
-        self.win.insch(self.row-1, self.col-1, char)
+        self.display.win.insch(self.row-1, self.col-1, char)
         # Move cursor
         self.col += 1
-        self.positioncursor()
+        self.display.position_cursor(self)
         # Show buffer (debug)
         self.show_debugging_buffer()
 
     def delete_char(self):
         self.buffer.deletechar(self.row, self.col)
-        self.win.delch(self.row-1, self.col-1)
+        self.display.win.delch(self.row-1, self.col-1)
 
     # }}}
 
@@ -240,25 +272,17 @@ class Editor: # {{{
                 }
 
     def show_debugging_buffer(self):
-        self.print(self.buffer.dump())
-
-    def print(self, *s, y=20):
-        """Print some text (for debugging)"""
-        pos = self.win.getyx()
-        WIDTH = 40
-        HEIGHT = 8
-        self.win.addstr(y-1, 0, ('`'*WIDTH+'\n')*HEIGHT)
-        self.win.addstr(y, 0, ' '.join(str(each) for each in s))
-        self.win.move(*pos)
-        self.win.refresh()
+        self.display.print(self.buffer.dump())
 
     # }}}
 
 # }}}
 
 def main(win):
-    editor = Editor(win)
-    editor.mainloop()
+    display = Display(win)
+    editor = Editor(display)
+    input_source = UserInputHandler(win, editor)
+    input_source.mainloop()
 
 if __name__ == '__main__':
     # This runs main, supplying it with a window
