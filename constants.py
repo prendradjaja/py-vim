@@ -14,7 +14,8 @@ from string import ascii_letters as LETTERS, digits as DIGITS
 , UNSPECIFIED
 , START
 , END
-) = range(14)
+, *trash
+) = range(100)
 
 SELF_INSERTABLE_CHARS = \
 ( LETTERS
