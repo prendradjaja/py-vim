@@ -53,6 +53,24 @@ class first_column(Motion):
         row, col = editor.row, 1
         return row, col
 
+class last_column(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row = editor.row
+        col = len(editor.buffer.line(row))
+        return row, col
+
+class first_nonblank(Motion):
+    type = EXCLUSIVE
+    def execute(editor):
+        row = editor.row
+        buf_iter = editor.buffer.iterator(row, 1, FORWARD, True)
+        for (_, col), char in buf_iter:
+            if char == '\n':
+                return row, col - 1
+            if char not in '\t ':
+                return row, col
+
 # foo motions
 
 class right_three_times(Motion):
@@ -70,4 +88,3 @@ class down_charwise(Motion):
         row, col = editor.row, editor.col
         row = min(row + 1, editor.buffer.numlines())
         return row, col
-

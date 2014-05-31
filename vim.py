@@ -231,6 +231,8 @@ class Editor: # {{{
                     's': motions.right_three_times,
                     'J': motions.down_charwise,
                     '0': motions.first_column,
+                    '$': motions.last_column,
+                    '^': motions.first_nonblank,
                     },
                 INSERT: {
                     '\\': self.normal,
