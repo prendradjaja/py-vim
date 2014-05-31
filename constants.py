@@ -14,6 +14,8 @@ from string import ascii_letters as LETTERS, digits as DIGITS
 , UNSPECIFIED
 , START
 , END
+, FORWARD
+, BACKWARD
 , *trash
 ) = range(100)
 
