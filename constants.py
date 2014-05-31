@@ -25,6 +25,7 @@ SELF_INSERTABLE_CHARS = \
 + '!@#$%^&*()'
 + '~`"<>,.;:/=?+-|[]{}'
 + "'"
++ " "
 )
 
 ABSTRACT_METHOD = 'abstract method should be overridden in subclass'
