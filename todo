@@ -2,7 +2,6 @@ Fix "jumping off the cliff" behavior of cursor_down and cursor_up
 Multichar commands
 Handle wrapped lines
 Handle signals (SIGINT, etc)
-Split Editor class into Editor and Display
 Use dependency injection
 Choose a_sanevariablenamingConvention
 Settings
