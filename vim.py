@@ -33,17 +33,17 @@ class Buffer: # {{{
         """Return tuple of strings: all lines"""
         return tuple(self._contents)
 
-    def numlines(self):
+    def num_lines(self):
         """Return the number of lines."""
         return len(self._contents)
 
-    def insertchar(self, row, col, char):
+    def insert_char(self, row, col, char):
         """Insert a character at the specified position"""
         s = self._contents[row-1]
         s = s[:col-1] + char + s[col-1:]
         self._contents[row-1] = s
 
-    def deletechar(self, row, col):
+    def delete_char(self, row, col):
         """Delete a character at the specified position"""
         s = self._contents[row-1]
         s = s[:col-1] + s[col:]
@@ -53,7 +53,7 @@ class Buffer: # {{{
     def coords_iterator(self, row, col, direction, include_start=False):
         if include_start:
             yield row, col
-        while row <= self.numlines():
+        while row <= self.num_lines():
             while col <= len(self._contents[row-1]):
                 col += 1
                 yield row, col
@@ -80,10 +80,10 @@ class UserInputHandler(InputSource):
         self.win = win
         self.editor = editor
 
-    def mainloop(self):
+    def main_loop(self):
         try:
             while True:
-                self.editor.processkey(self.win.getkey())
+                self.editor.process_key(self.win.getkey())
         except KeyboardInterrupt:
             return
 
@@ -134,14 +134,14 @@ class Editor: # {{{
         self.buffer = Buffer(["Lorem ipsum dolor sit amet,",
                               "consectetur adipisicing elit",
                               "ed do eiusmod"])
-        self.bindings = self.defaultbindings()
+        self.bindings = self.default_bindings()
         self.winpos = 1
         self.col = 1
         self.row = 1
         self.pending_operator = None
         self.display.show(self)
 
-    def processkey(self, key):
+    def process_key(self, key):
         if self.mode is NORMAL:
             if key in self.bindings[OPERATOR]:
                 self.mode = OPERATOR_PENDING
@@ -155,7 +155,7 @@ class Editor: # {{{
             if key in self.bindings[INSERT]:
                 self.bindings[INSERT][key]()
             elif key in SELF_INSERTABLE_CHARS:
-                self.insertchar(key)
+                self.insert_char(key)
         elif self.mode is OPERATOR_PENDING:
             if key in self.bindings[MOTION]:
                 operator, self.pending_operator = self.pending_operator, None
@@ -217,7 +217,7 @@ class Editor: # {{{
         # 5. tell display to redraw
         # TODO? this redraws everything
         self.display.show(self)
-        self.display.print(self.buffer.numlines())
+        self.display.print(self.buffer.num_lines())
 
     # For changing modes {{{
     def insert(self):
@@ -229,9 +229,9 @@ class Editor: # {{{
     # }}}
 
     # Editor commands {{{
-    def insertchar(self, char):
+    def insert_char(self, char):
         # Add to buffer and display
-        self.buffer.insertchar(self.row, self.col, char)
+        self.buffer.insert_char(self.row, self.col, char)
         self.display.win.insch(self.row-1, self.col-1, char)
         # Move cursor
         self.col += 1
@@ -240,13 +240,13 @@ class Editor: # {{{
         self.show_debugging_buffer()
 
     def delete_char(self):
-        self.buffer.deletechar(self.row, self.col)
+        self.buffer.delete_char(self.row, self.col)
         self.display.win.delch(self.row-1, self.col-1)
 
     # }}}
 
     # Other {{{
-    def defaultbindings(self):
+    def default_bindings(self):
         return {
                 NORMAL: {
                     'i': self.insert,
@@ -285,7 +285,7 @@ def main(win):
     display = Display(win)
     editor = Editor(display)
     input_source = UserInputHandler(win, editor)
-    input_source.mainloop()
+    input_source.main_loop()
 
 if __name__ == '__main__':
     # This runs main, supplying it with a window

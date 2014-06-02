@@ -38,7 +38,7 @@ class up(Motion):
 class down(Motion):
     type = LINEWISE
     def execute(row, col, buffer):
-        row = min(row + 1, buffer.numlines())
+        row = min(row + 1, buffer.num_lines())
         return row, col
 
 class first_column(Motion):
@@ -76,5 +76,5 @@ class right_three_times(Motion):
 class down_charwise(Motion):
     type = EXCLUSIVE
     def execute(row, col, buffer):
-        row = min(row + 1, buffer.numlines())
+        row = min(row + 1, buffer.num_lines())
         return row, col
