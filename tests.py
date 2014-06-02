@@ -39,8 +39,7 @@ class EditorTests(unittest.TestCase):
                 util.unlines(["oo", " bar", "  dolor", " sit"]))
 
     def testFirstNonblank(self):
-        self.editor.row, self.editor.col = 3, 5
-        self.assertEqual(motions.first_nonblank.execute(self.editor), (3, 3))
+        self.assertEqual(motions.first_nonblank.execute(3, 5, self.editor.buffer), (3, 3))
 
 if __name__ == '__main__':
     unittest.main()

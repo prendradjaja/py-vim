@@ -147,7 +147,7 @@ class Editor: # {{{
                 self.mode = OPERATOR_PENDING
                 self.pending_operator = self.bindings[OPERATOR][key]
             elif key in self.bindings[MOTION]:
-                self.row, self.col = self.bindings[MOTION][key].execute(self)
+                self.row, self.col = self.execute_motion(self.bindings[MOTION][key])
                 self.display.position_cursor(self)
             elif key in self.bindings[NORMAL]:
                 self.bindings[NORMAL][key]()
@@ -162,6 +162,9 @@ class Editor: # {{{
                 self.mode = NORMAL
                 self.execute_command(operator, self.bindings[MOTION][key])
 
+    def execute_motion(self, motion):
+        return motion.execute(self.row, self.col, self.buffer)
+
     def execute_command(self, operator, motion):
         # my responsibilities:
         #   1. extract the text by executing the motion
@@ -175,12 +178,12 @@ class Editor: # {{{
         # 1. extract text
         if command_is_linewise:
             row_now = self.row
-            row_after_motion, _ = motion.execute(self)
+            row_after_motion, _ = self.execute_motion(motion)
             firstrow, lastrow = sorted((row_now, row_after_motion))
             old_text = self.buffer.lines(firstrow, lastrow)
         else:
             pos_now = self.row, self.col
-            pos_after_motion = motion.execute(self)
+            pos_after_motion = self.execute_motion(motion)
             (firstrow, firstcol), (lastrow, lastcol) = sorted((pos_now, pos_after_motion))
             if motion.type is EXCLUSIVE:
                 # TODO this is a hack for "if exclusive, cut last char"
